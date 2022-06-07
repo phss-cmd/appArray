@@ -1,26 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,FlatList } from 'react-native';
+import { StyleSheet, Text, View,FlatList,Image } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import {
+  useFonts,
+  Nunito_400Regular,
+  Lato_400Regular,
+  Inter_900Black,
+} from '@expo-google-fonts/dev';
+
 
 export default function App() {
+
+    let [fontsLoaded] = useFonts({
+      Nunito_400Regular,
+      Lato_400Regular,
+      Inter_900Black,
+    });
+  
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }else{
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text>Rede Social - Encontros no Senac</Text>
-      <Text>Você tem um projeto Integrador?</Text>
-      <Text>Quer envolver novas áreas?</Text>
-      <Text>Então vamos encontar os alunos aqui. </Text>
-      
+    <View style={estilo.container}>
+      <StatusBar estilo="auto" />
+      <Text style={estilo.titulo1} >Rede Social - Encontros no Senac</Text>
+      <Text style={estilo.titulo2} >Você tem um projeto Integrador?</Text>
+      <Text style={estilo.titulo2} >Quer envolver novas áreas?</Text>
+      <Text style={estilo.titulo2} >Então vamos encontar os alunos aqui. </Text>
       <FlatList 
         data={pessoas}
         renderItem={({item})=>
-        <View>
-          <Text>{item.nome}</Text>
-          <Text>{item.curso}</Text>
-          <Text>{item.periodo}</Text>
-          <Text>{item.turma}</Text>
-          <Text>{item.gosto}</Text>
-          <Text>{item.bio}</Text>
-          <Text>{item.img}</Text>
+        <View style={estilo.container} >
+          <View>
+          <Image style={estilo.img} source={item.img} />
+            </View>
+          <Text style={estilo.titulo1} >{item.nome}</Text>
+          <Text style={estilo.titulo2}>{item.curso}</Text>
+          <Text style={estilo.titulo2}>{item.periodo}</Text>
+          <Text style={estilo.titulo2}>{item.turma}</Text>
+          <Text style={estilo.titulo2}>{item.gosto}</Text>
+          <Text style={estilo.titulo2}>{item.bio}</Text>
+          
         </View>
 
         }
@@ -28,16 +49,36 @@ export default function App() {
       
     </View>
   );
+      }
 }
 
-const styles = StyleSheet.create({
+const estilo = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop:20,
+    margin:3,
+    backgroundColor: '#e9ecef'
   },
+  img:{
+    width:100,
+    height:150,
+    alignItems:'center',
+    borderRadius:150,
+    marginVertical:5,
+  },
+  titulo1:{
+    marginTop:10,
+    marginBottom:1,
+    fontFamily:'SansitaSwashed_700Bold',
+    fontSize:20,
+  },
+  titulo2:{
+    marginVertical:2,
+    fontFamily:'OInter_900Black'
+  }
 });
 
 
@@ -50,7 +91,7 @@ const pessoas =[
     turma: 'Ti10m',
     gosto:'Php',
     bio:'Curta a vida a doida',
-    img:'./assets/miranha.png'
+    img:require('./assets/miranha.png'),
   },
   {
     uid:420,
@@ -60,7 +101,7 @@ const pessoas =[
     turma:'TI10m',
     gosto:'Hardware, Redes',
     bio:'mais novo membro da conferencia mundial de pods no banheiro ',
-    img:'./assets/silvio.png',
+    img:require('./assets/silvio.jpg'),
   },
   
   {
@@ -71,7 +112,7 @@ const pessoas =[
     turma:'ti12',
     gosto:'sofrer',
     bio:'matar um certo alguem é meu sonho',
-    img:'./assets/silvio.png'
+    img:require ('./assets/opequenino.png'),
   },
 
   {
@@ -81,8 +122,8 @@ const pessoas =[
     periodo: 'Manhã',
     turma: 'Ti10',
     gosto: 'Hardware, Back-End, Redes, C#',
-    bio: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry Lorem Ipsum is simply dummy.',
-    img:'./assets/sherek.png',
+    bio: ' been the industry Lorem Ipsum is simply dummy.',
+    img:require ('./assets/shrek.png')
   },
 
   {
@@ -93,6 +134,6 @@ const pessoas =[
     turma:'TI10m',
     gosto:'Php, Css, Design Gráfico, Games',
     bio:'Gosto de Jogar, gosto de mexer na internet, sou professor de informática, e gosto de tocar instrumentos como teclado, violão, guitarra e bateria',
-    img: '',
+    img:require ('./assets/opequenino.png')
   },
 ]
